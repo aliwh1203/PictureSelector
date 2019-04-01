@@ -333,25 +333,19 @@ public class PictureImageGridAdapter extends RecyclerView.Adapter<RecyclerView.V
             }
         }
 
-        if (picNum >= maxSelectNum && !isChecked) {
-            String str = context.getString(R.string.picture_message_max_num, maxSelectNum);
-            ToastManage.s(context, str);
-            return;
+        if (image.getPictureType().startsWith(PictureConfig.IMAGE)) {
+            if (picNum >= maxSelectNum && !isChecked) {
+                String str = context.getString(R.string.picture_message_max_num, maxSelectNum);
+                ToastManage.s(context, str);
+                return;
+            }
+        } else if (image.getPictureType().startsWith(PictureConfig.VIDEO)) {
+            if (videoNum >= 2 && !isChecked) {
+                String str = context.getString(R.string.picture_message_video_max_num, 2);
+                ToastManage.s(context, str);
+                return;
+            }
         }
-        if (videoNum >= 2 && !isChecked) {
-            String str = context.getString(R.string.picture_message_video_max_num, 2);
-            ToastManage.s(context, str);
-            return;
-        }
-
-//        if (selectImages.size() >= maxSelectNum && !isChecked) {
-//            boolean eqImg = pictureType.startsWith(PictureConfig.IMAGE);
-//            String str = eqImg ? context.getString(R.string.picture_message_max_num, maxSelectNum)
-//                    : context.getString(R.string.picture_message_video_max_num, maxSelectNum);
-//            ToastManage.s(context, str);
-//            return;
-//        }
-
         if (isChecked) {
             for (LocalMedia media : selectImages) {
                 if (media.getPath().equals(image.getPath())) {
