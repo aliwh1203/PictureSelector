@@ -402,7 +402,7 @@ public class PicturePreviewActivity extends PictureBaseActivity implements
                     boolean eqImg = pictureType.startsWith(PictureConfig.IMAGE);
                     String str = eqImg ? getString(R.string.picture_min_img_num, config.minSelectNum)
                             : getString(R.string.picture_min_video_num, config.minSelectNum);
-                    ToastManage.s(mContext,str);
+                    ToastManage.s(mContext, str);
                     return;
                 }
             }
@@ -454,7 +454,7 @@ public class PicturePreviewActivity extends PictureBaseActivity implements
             }
         } else if (resultCode == UCrop.RESULT_ERROR) {
             Throwable throwable = (Throwable) data.getSerializableExtra(UCrop.EXTRA_ERROR);
-            ToastManage.s(mContext,throwable.getMessage());
+            ToastManage.s(mContext, throwable.getMessage());
         }
     }
 

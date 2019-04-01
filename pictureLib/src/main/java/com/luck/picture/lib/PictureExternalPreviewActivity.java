@@ -1,6 +1,7 @@
 package com.luck.picture.lib;
 
 import android.Manifest;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -140,10 +142,12 @@ public class PictureExternalPreviewActivity extends PictureBaseActivity implemen
             final PhotoView imageView = (PhotoView) contentView.findViewById(R.id.preview_image);
             // 长图控件
             final SubsamplingScaleImageView longImg = (SubsamplingScaleImageView) contentView.findViewById(R.id.longImg);
-
+            ImageView iv_play = (ImageView) contentView.findViewById(R.id.iv_play);
             LocalMedia media = images.get(position);
             if (media != null) {
                 final String pictureType = media.getPictureType();
+                boolean eqVideo = pictureType.startsWith(PictureConfig.VIDEO);
+                iv_play.setVisibility(eqVideo ? View.VISIBLE : View.GONE);
                 final String path;
                 if (media.isCut() && !media.isCompressed()) {
                     // 裁剪过
@@ -229,6 +233,19 @@ public class PictureExternalPreviewActivity extends PictureBaseActivity implemen
                         overridePendingTransition(0, R.anim.a3);
                     }
                 });
+
+                iv_play.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("video_path", path);
+                        intent.putExtras(bundle);
+                        intent.setClass(mContext, PictureVideoPlayActivity.class);
+                        mContext.startActivity(intent);
+                    }
+                });
+
                 imageView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {

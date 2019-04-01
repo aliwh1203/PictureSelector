@@ -318,13 +318,39 @@ public class PictureImageGridAdapter extends RecyclerView.Adapter<RecyclerView.V
 //                return;
 //            }
 //        }
-        if (selectImages.size() >= maxSelectNum && !isChecked) {
-            boolean eqImg = pictureType.startsWith(PictureConfig.IMAGE);
-            String str = eqImg ? context.getString(R.string.picture_message_max_num, maxSelectNum)
-                    : context.getString(R.string.picture_message_video_max_num, maxSelectNum);
+
+        int picNum = 0;
+        int videoNum = 0;
+        for (int i = 0; i < selectImages.size(); i++) {
+            String choiceType = selectImages.get(i).getPictureType();
+            boolean eqImg = choiceType.startsWith(PictureConfig.IMAGE);
+            if (eqImg) {
+                picNum++;
+            }
+            boolean eqVideo = choiceType.startsWith(PictureConfig.VIDEO);
+            if (eqVideo) {
+                videoNum++;
+            }
+        }
+
+        if (picNum >= maxSelectNum && !isChecked) {
+            String str = context.getString(R.string.picture_message_max_num, maxSelectNum);
             ToastManage.s(context, str);
             return;
         }
+        if (videoNum >= 2 && !isChecked) {
+            String str = context.getString(R.string.picture_message_video_max_num, 2);
+            ToastManage.s(context, str);
+            return;
+        }
+
+//        if (selectImages.size() >= maxSelectNum && !isChecked) {
+//            boolean eqImg = pictureType.startsWith(PictureConfig.IMAGE);
+//            String str = eqImg ? context.getString(R.string.picture_message_max_num, maxSelectNum)
+//                    : context.getString(R.string.picture_message_video_max_num, maxSelectNum);
+//            ToastManage.s(context, str);
+//            return;
+//        }
 
         if (isChecked) {
             for (LocalMedia media : selectImages) {
