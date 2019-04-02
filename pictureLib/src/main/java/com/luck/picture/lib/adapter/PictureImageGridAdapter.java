@@ -334,8 +334,8 @@ public class PictureImageGridAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
 
         if (image.getPictureType().startsWith(PictureConfig.IMAGE)) {
-            if (picNum >= maxSelectNum && !isChecked) {
-                String str = context.getString(R.string.picture_message_max_num, maxSelectNum);
+            if (picNum >= 6 && !isChecked) {
+                String str = context.getString(R.string.picture_message_max_num, 6);
                 ToastManage.s(context, str);
                 return;
             }
